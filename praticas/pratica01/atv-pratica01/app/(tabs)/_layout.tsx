@@ -1,33 +1,46 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs, useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import IconButton from '../../components/IconButton';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function TabsLayout() {
+  const router = useRouter();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        headerStyle: { backgroundColor: '#3b82f6' },
+        headerTintColor: 'white',
+        tabBarStyle: { backgroundColor: '#3b82f6' },
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: '#cbd5e1',
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="DespesaRecentes"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Despesas Recentes',
+          tabBarLabel: 'Recentes',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="time" size={size} color={color} />
+          ),
+          headerRight: ({ tintColor }) => (
+            <IconButton
+              icon="add"
+              size={24}
+              color={tintColor}
+              onPress={() => router.push('/GerenciarDespesa')}
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="TodasDespesas"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Todas as Despesas',
+          tabBarLabel: 'Todas',
+          tabBarIcon: ({ color, size }) => (
+             <Ionicons name="list" size={size} color={color} />
+          ),
         }}
       />
     </Tabs>
